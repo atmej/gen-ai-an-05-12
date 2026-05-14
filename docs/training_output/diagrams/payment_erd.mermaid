@@ -1,0 +1,20 @@
+
+erDiagram
+    ACCOUNT ||--o{ PAYMENT_LINK : "has"
+
+    ACCOUNT {
+        int id PK "Primary Key"
+        string owner_name
+        float balance
+        string currency
+    }
+
+    PAYMENT_LINK {
+        int id PK "Primary Key"
+        int account_id FK "Foreign Key to ACCOUNT"
+        float amount
+        string description "optional, e.g., 'for pizza'"
+        string status "e.g., active, used, expired, cancelled"
+        datetime expires_at
+        datetime created_at
+    }

@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant User
+    participant Browser
+    participant WebServer
+    participant BankService
+    participant Database
+
+    User->>Browser: Clicks "Create Payment Link"
+    Browser->>WebServer: POST /payment-links (amount, account_id)
+    WebServer->>BankService: create_payment_link(amount, account_id)
+    BankService->>Database: Store new payment link (status: active)
+    Database-->>BankService: Returns payment_link_id, URL
+    BankService-->>WebServer: Returns payment_link_id, URL
+    WebServer-->>Browser: Displays payment link URL
+    Browser-->>User: Shows payment link URL
+
+    User->>Browser: Shares link with Payer
+    participant Payer
+    Payer->>Browser: Clicks payment link
+    Browser->>WebServer: GET /pay/{payment_link_id}
+    WebServer->>Database: Get payment link details
+    Database-->>WebServer: Returns link details (amount, status)
+    alt Link is active
+        WebServer->>BankService: process_payment(link_details)
+        BankService->>Database: Update sender and receiver balances
+        BankService->>Database: Update payment link status to 'used'
+        Database-->>BankService: Success
+        BankService-->>WebServer: Payment successful
+        WebServer-->>Browser: Shows "Payment Successful"
+        Browser-->>Payer: Displays success message
+    else Link is not active (e.g., expired, used)
+        WebServer-->>Browser: Shows "Invalid Link"
+        Browser-->>Payer: Displays error message
+    end

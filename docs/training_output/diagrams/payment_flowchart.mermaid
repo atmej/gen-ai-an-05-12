@@ -1,0 +1,22 @@
+
+flowchart TD
+    A[User requests to create payment link] --> B{API Receives Request};
+    B --> C[Validate request data];
+    C --> D{Is validation successful?};
+    D -- Yes --> E[Generate unique payment link];
+    E --> F[Store link details in DB with 'active' status];
+    F --> G[Return link to user];
+    D -- No --> H[Return validation error];
+
+    subgraph Payer Interaction
+        I[Payer clicks the payment link] --> J[API receives payment request];
+        J --> K[Fetch link details from DB];
+        K --> L{Is link valid and active?};
+        L -- Yes --> M[Process payment transaction];
+        M --> N[Update link status to 'used'];
+        N --> O[Confirm payment to payer];
+        L -- No --> P[Show error message to payer];
+    end
+
+    G --> I;
+

@@ -1,0 +1,32 @@
+C4Component
+    title Component diagram for API Application
+
+    Container_Boundary(api, "API Application") {
+        Component(account_routes, "Account Routes", "Python/FastAPI", "Manages account-related endpoints")
+        Component(bank_routes, "Bank Routes", "Python/FastAPI", "Manages bank-related endpoints")
+        Component(payment_link_routes, "Payment Link Routes", "Python/FastAPI", "Manages payment link endpoints")
+
+        Component(account_service, "Account Service", "Python", "Handles business logic for accounts")
+        Component(bank_service, "Bank Service", "Python", "Handles business logic for banking")
+        Component(payment_link_service, "Payment Link Service", "Python", "Handles business logic for payment links")
+
+        Component(account_repository, "Account Repository", "Python", "Data access for accounts")
+        Component(payment_link_repository, "Payment Link Repository", "Python", "Data access for payment links")
+
+        Rel(account_routes, account_service, "Uses")
+        Rel(bank_routes, bank_service, "Uses")
+        Rel(payment_link_routes, payment_link_service, "Uses")
+
+        Rel(bank_service, account_service, "Uses")
+        Rel(payment_link_service, account_service, "Uses")
+        Rel(payment_link_service, bank_service, "Uses")
+
+        Rel(account_service, account_repository, "Uses")
+        Rel(payment_link_service, payment_link_repository, "Uses")
+    }
+
+    ContainerDb(db, "Database", "SQL", "Stores account and payment link data")
+
+    Rel(account_repository, db, "Reads/Writes")
+    Rel(payment_link_repository, db, "Reads/Writes")
+

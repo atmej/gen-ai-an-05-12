@@ -11,11 +11,11 @@ The chosen technologies for this project, although it is not intended to be focu
 
 There are two ways to setup the project - the native way using `venv` and `pip`, or using `uv`.
 
-## Setup using `uv`
+## ~~Setup using `uv`~~
 
 Using `uv` is the recommended way to quickly get started with the project. `uv` is a tool that combines virtual environment management and dependency installation in one command.
 
-### Fetch `uv`
+### ~~Fetch `uv`~~
 
 Install `uv` by running one of the following commands in your terminal depending on your operating system:
 
@@ -37,7 +37,7 @@ Alternatively, you can install `uv` via `pip`:
 pip install uv
 ```
 
-### Setup and run using `uv`
+### ~~Setup and run using `uv`~~
 
 ```bash
 # Setup environment and install dependencies
@@ -93,3 +93,6 @@ Open your browser and navigate to `http://localhost:8000/docs` to access the int
 ## Database Initialization
 
 Whenever you modify the database models or default data, you should delete the existing SQLite database file (`./app.db`) to apply the changes. The application will automatically create a new database with the updated schema and default data on the next run.
+
+
+# 12.5.2026  Stuff generated during the course is in: docs\training_output

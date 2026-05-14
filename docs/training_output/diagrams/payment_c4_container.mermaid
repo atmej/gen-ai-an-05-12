@@ -1,0 +1,16 @@
+
+C4Container
+    title Container diagram for Happy Bank System
+
+    System_Boundary(happy_bank, "Happy Bank System") {
+        Container(spa, "Web Browser", "JavaScript, HTML, CSS", "The client-side user interface")
+        Container(api, "API Application", "Python (FastAPI)", "Handles all business logic and exposes a JSON API")
+        ContainerDb(db, "Database", "SQL", "Stores account information, transactions, and payment links")
+        Container(payment_link_system, "Payment Link System", "Python (Part of API App)", "Manages creation, processing, and status of payment links")
+    }
+
+    Rel(spa, api, "Makes API calls", "HTTPS/JSON")
+    Rel(api, db, "Reads from and writes to", "SQL")
+    Rel(api, payment_link_system, "Uses")
+    Rel(payment_link_system, db, "Reads from and writes to", "SQL")
+
